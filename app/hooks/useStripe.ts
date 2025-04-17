@@ -74,9 +74,3 @@ export function useStripe() {
         handleCreateStripePortal
     }
 }
-
-const {
-    createPaymentStripeCheckout,
-    createSubscriptionStripeCheckout,
-    handleCreateStripePortal,
-} = useStripe()
