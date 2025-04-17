@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { loadStripe, Stripe } from "@stripe/stripe-js"
 
+
 export function useStripe() {
     const [stripe, setStripe] = useState<Stripe | null>();
 
@@ -13,6 +14,7 @@ export function useStripe() {
         }
         loadStripeAsync();
     }, []);
+
 
     async function createPaymentStripeCheckout(checkoutData: any) {
         if(!stripe) return;
@@ -33,6 +35,7 @@ export function useStripe() {
         }
     }
 
+
     async function createSubscriptionStripeCheckout(checkoutData: any) {
         if(!stripe) return;
         try {
@@ -52,13 +55,28 @@ export function useStripe() {
         }
     }
 
+
+    async function handleCreateStripePortal() {
+        const response = await fetch("/api/stripe/create-portal", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        const data = await response.json();
+        window.location.href = data.url;
+    }
+
+
     return {
         createPaymentStripeCheckout,
-        createSubscriptionStripeCheckout
+        createSubscriptionStripeCheckout,
+        handleCreateStripePortal
     }
 }
 
 const {
     createPaymentStripeCheckout,
-    createSubscriptionStripeCheckout
+    createSubscriptionStripeCheckout,
+    handleCreateStripePortal,
 } = useStripe()
