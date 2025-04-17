@@ -15,14 +15,16 @@ export default function Pagamentos() {
 
             <button
                 className= "border rounded-md px-1"
-                onClick={createPaymentStripeCheckout}
+                onClick={() => createPaymentStripeCheckout({testId: "123"})}
             >
                 Criar Pagamento Stripe
             </button>
 
             <button
                 className= "border rounded-md px-1"
-                onClick={createSubscriptionStripeCheckout}
+                onClick={() => createSubscriptionStripeCheckout({
+                    testId: "123",
+                })}
             >
                 Criar Assinatura Stripe
             </button>

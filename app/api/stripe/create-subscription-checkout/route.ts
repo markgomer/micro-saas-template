@@ -13,7 +13,6 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Price not found" }, { status: 500 });
     }
 
-
     /**
      * stripeCustomerId:
      * precisamos fazer um cliente NA STRIPE pra ter referecência dele quando
