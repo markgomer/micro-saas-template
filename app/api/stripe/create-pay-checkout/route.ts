@@ -11,6 +11,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Price not found" }, { status: 500 });
     }
 
+    // metadata para passar info do chekcout até o webhook
     const metadata = { testID };
 
     try {
@@ -20,7 +21,8 @@ export async function POST(req: NextRequest) {
             payment_method_types: ["card", "paypal", "boleto"],
             success_url: `${req.headers.get("origin")}/success`,
             cancel_url: `${req.headers.get("origin")}/`,
-            ...(userEmail && { customer_email: userEmail })
+            ...(userEmail && { customer_email: userEmail }),
+            metadata
         })
         if(!session.url) {
             return NextResponse.json(
