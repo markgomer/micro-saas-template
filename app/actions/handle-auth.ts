@@ -6,11 +6,12 @@ export async function handleAuth() {
     const session = await auth();
 
     if(session) {
-        return await signOut({
+        await signOut({
             redirectTo: "/"
         })
+    } else {
+        await signIn("google", {
+            redirectTo: "/dashboard"
+        })
     }
-    await signIn("google", {
-        redirectTo: "/dashboard"
-    })
 }
