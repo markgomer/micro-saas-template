@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     // sob hipótese alguma
     const { testID, userEmail } = await req.json() // pega o body da requisição
 
-    const price = process.env.STRIPE_PRODUCT_PRICE_ID;
+    const price = process.env.STRIPE_SUBSCRIPTION_PRICE_ID;
     if(!price) {
         return NextResponse.json({ error: "Price not found" }, { status: 500 });
     }
@@ -29,7 +29,11 @@ export async function POST(req: NextRequest) {
     const customerId = await getOrCreateCustomer(userId, usrMail);
 
     // metadata para passar info do chekcout até o webhook
-    const metadata = { testID };
+    const metadata = {
+        testID,
+        price,
+        userId
+    };
 
     try {
         const session = await stripe.checkout.sessions.create({
@@ -48,7 +52,6 @@ export async function POST(req: NextRequest) {
                 { status: 500 }
             );
         }
-
         return NextResponse.json({ sessionId: session.id }, { status: 200 });
     } catch(error) {
         console.error(error);

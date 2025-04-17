@@ -8,9 +8,9 @@ import { handleStripeCancelSubscription } from "@/server/stripe/handle-cancel";
 
 const secret = process.env.STRIPE_WEBHOOK_SECRET;
 
-export async function POS(req: NextRequest) {
+export async function POST(req: NextRequest) {
     try {
-        const body = await req.json();
+        const body = await req.text();
         const headersList = await headers();
         const signature = headersList.get("stripe-signature");
         if(!signature || !secret) {
@@ -52,7 +52,13 @@ export async function POS(req: NextRequest) {
             case "customer.subscription.deleted": // cancelou assinatura
                 await handleStripeCancelSubscription(event);
                 break;
+            default:
+                console.log(`Unhandled event type ${event.type}`);
         }
+        return NextResponse.json(
+            { message: "Webhook received" },
+            { status: 200 }
+        )
     } catch(error) {
         console.error(error);
         return NextResponse.json(
@@ -60,5 +66,4 @@ export async function POS(req: NextRequest) {
             { status: 500 }
         );
     }
-
 }

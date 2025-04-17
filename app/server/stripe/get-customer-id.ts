@@ -1,6 +1,7 @@
+"server-side";
+
 import { db } from "@/lib/firebase";
 import stripe from "@/lib/stripe";
-import "server-side";
 
 export async function getOrCreateCustomer(userId: string, userEmail: string) {
     try {

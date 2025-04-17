@@ -46,7 +46,7 @@ export function useStripe() {
                     headers: {
                         "Content-Type": "application/json"
                 },
-                body: JSON.stringify(checkoutData)
+                body: JSON.stringify(checkoutData),
             })
             const data = await response.json();
             await stripe.redirectToCheckout({ sessionId: data.sessionId });
