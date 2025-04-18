@@ -5,6 +5,10 @@ import { useEffect } from "react";
 export default function useMercadoPago() {
     const router = useRouter();
 
+    useEffect(() => {
+        initMercadoPago(process.env.NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY!);
+    }, []);
+
     async function createMercadoPagoCheckout({
         testId,
         userEmail,
@@ -12,9 +16,6 @@ export default function useMercadoPago() {
         testId: string;
         userEmail: string;
     }) {
-        useEffect(() => {
-            initMercadoPago(process.env.NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY!);
-        }, []);
         try {
             const response = await fetch(
                 "/api/mercado-pago/create-checkout",
