@@ -56,6 +56,7 @@ export async function POST(req: NextRequest) {
             initPoint: createdPreference.init_point,
         });
     } catch (error) {
+        console.error(error);
         return NextResponse.json(
             { error: "Erro ao criar checkout com Mercado Pago"},
             { status: 500 }
