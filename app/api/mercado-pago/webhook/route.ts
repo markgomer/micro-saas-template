@@ -1,5 +1,8 @@
-import { validateMercadoPagoWebhook } from "@/lib/mercadopago";
+import { Payment } from "mercadopago";
 import { NextRequest, NextResponse } from "next/server";
+
+import mpClient, { validateMercadoPagoWebhook } from "@/lib/mercadopago";
+import { handleMercadoPagoPayment } from "@/server/mercado-pago/handle-payment";
 
 export async function POST(req: NextRequest) {
     try {
@@ -8,6 +11,19 @@ export async function POST(req: NextRequest) {
         const { type, data } = body;
 
         // Webhook aqui
+        switch(type) {
+            case "payment": 
+                const payment = new Payment(mpClient);
+                const paymentData = await payment.get({ id: data.id })
+                if(paymentData.status === "approved" || paymentData.date_approved !== null) {
+                    await handleMercadoPagoPayment(paymentData);
+                }
+                break;
+            case "subscription_preapproval": // eventos de assinatura
+                break;
+            default: 
+                console.log("Esse evento não é suportado");
+        }
         
         return NextResponse.json( { received: true }, { status: 200 });
 
