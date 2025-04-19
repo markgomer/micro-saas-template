@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Home() {
     return (
         <div className="flex flex-col items-center justify-center h-screen">
-            <h1 className="text-4xl font-bold">Landing Page</h1>
+            <h1 className="text-4xl font-bold">OI MARI</h1>
             <Link href="/login">
                 <p>Login</p>
             </Link>
