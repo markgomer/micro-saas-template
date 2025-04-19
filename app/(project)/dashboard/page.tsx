@@ -1,8 +1,14 @@
 import Link from "next/link";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/lib/auth"
 import { handleAuth } from "@/actions/handle-auth";
+
+export const metadata: Metadata = {
+  title: "Template Micro SaaS",
+  description: "Template para micro SaaS",
+};
 
 export default async function Dashboard() {
     const session = await auth();
