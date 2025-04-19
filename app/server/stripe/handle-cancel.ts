@@ -1,4 +1,5 @@
 import { db } from "@/lib/firebase";
+import resend from "@/lib/resend";
 import "server-only";
 
 import Stripe from "stripe";
@@ -19,8 +20,21 @@ export async function handleStripeCancelSubscription(
         return;
     }
     const userId = userRef.docs[0].id;
+    const userEmail = userRef.docs[0].data().email;
 
     await db.collection("users").doc(userId).update({
         subscriptionStatus: "inactive"
     });
+    // send email through resend
+    const { data, error } = await resend.emails.send({
+        from: 'Acme <aureliojuniorcmrj@hotmail.com>',
+        to: [userEmail],
+        subject: 'Assinatura cancelada com sucesso',
+        text: "Assinatura cancelada com sucesso",
+    });
+    if (error) {
+        console.error("User ID not found");
+        return;
+    }
+    console.log(data);
 }
