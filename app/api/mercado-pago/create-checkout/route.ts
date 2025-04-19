@@ -14,6 +14,7 @@ export async function POST(req: NextRequest) {
                 metadata: {
                     // essa variavel é convertida para snake_case -> teste_id
                     testId,
+                    userEmail
                 },
                 // também é importante para a pontuação do MP
                 ...(userEmail && { payer: { email: userEmail } }),
