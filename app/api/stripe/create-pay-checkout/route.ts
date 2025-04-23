@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
             mode: "payment",
             payment_method_types: ["card", "boleto"],
             success_url: `${req.headers.get("origin")}/success`,
-            cancel_url: `${req.headers.get("origin")}/`,
+            cancel_url: `${req.headers.get("origin")}/dashboard`,
             ...(userEmail && { customer_email: userEmail }),
             metadata
         })
