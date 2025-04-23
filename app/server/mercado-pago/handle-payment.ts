@@ -17,5 +17,5 @@ export async function handleMercadoPagoPayment(paymentData: PaymentResponse) {
         console.error("User ID not found");
         return;
     }
-    console.log(data);
+    console.log("[DEBUG] EMAIL ENVIADO", data);
 }

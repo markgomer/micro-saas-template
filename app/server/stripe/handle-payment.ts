@@ -34,6 +34,6 @@ export async function handleStripePayment(
             console.error("User ID not found");
             return;
         }
-        console.log(data);
+        console.log("[DEBUG] EMAIL ENVIADO COM SUCESSO", data);
     };
 }

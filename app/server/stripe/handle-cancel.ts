@@ -38,5 +38,5 @@ export async function handleStripeCancelSubscription(
         console.error("User ID not found");
         return;
     }
-    console.log(data);
+    console.log("[DEBUG] email enviado com sucesso", data);
 }
