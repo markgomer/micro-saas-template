@@ -1,5 +1,6 @@
-import stripe from "@/lib/stripe";
 import { NextRequest, NextResponse } from "next/server";
+
+import stripe from "@/lib/stripe";
 
 export async function POST(req: NextRequest) {
     // não passa preço de produto ou qualquer informação sensível

@@ -29,18 +29,26 @@ export async function POST(req: NextRequest) {
                 if(metadata?.price === process.env.STRIPE_PRODUCT_PRICE_ID) {
                     await handleStripePayment(event)
                 }
-                if(metadata?.price === process.env.STRIPE_SUBSCRIPTION_PRICE_ID) {
+                if(metadata?.price ===
+                    process.env.STRIPE_SUBSCRIPTION_PRICE_ID) {
                     await handleStripeSubscription(event);
                 }
                 break;
             case "checkout.session.expired": // expirou tempo de pagamento
-                console.log("Enviar um email para o usuário avisando que o pagamento expirou");
+                console.log(
+                    "Enviar um email para o usuário avisando que o\
+                    pagamento expirou");
                 break;
             case "checkout.session.async_payment_succeeded": // boleto pago
-                console.log("Enviar um email para o usuário avisando que o pagamento foi realizado");
+                console.log(
+                    "Enviar um email para o usuário avisando que o\
+                    pagamento foi realizado");
                 break;
             case "checkout.session.async_payment_failed": // boleto falhou
-                console.log("Enviar um email para o usuário avisando que o pagamento foi falhou");
+                console.log(
+                    "Enviar um email para o usuário avisando que o\
+                    pagamento foi falhou"
+                );
                 break;
             case "customer.subscription.created": // criou assinatura
                 console.log("Mensagem de boas vindas porque acabou de assinar");

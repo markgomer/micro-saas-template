@@ -1,13 +1,14 @@
-import { db } from "@/lib/firebase";
-import resend from "@/lib/resend";
 import "server-only";
 
 import Stripe from "stripe";
+import resend from "@/lib/resend";
+import { db } from "@/lib/firebase";
+
 
 export async function handleStripeCancelSubscription(
     event: Stripe.CustomerSubscriptionDeletedEvent
 ) {
-    console.log("Pagamento realizado com sucesso. Enviar um email liberar acesso");
+    console.log("Tentando cancelar assinatura...");
     const customerId = event.data.object.customer;
     // buscar id do banco de dados da firebase
     const userRef = await db
@@ -25,6 +26,7 @@ export async function handleStripeCancelSubscription(
     await db.collection("users").doc(userId).update({
         subscriptionStatus: "inactive"
     });
+
     // send email through resend
     const { data, error } = await resend.emails.send({
         from: 'Acme <aureliojuniorcmrj@hotmail.com>',
