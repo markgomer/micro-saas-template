@@ -11,9 +11,8 @@ export async function handleStripePayment(
 ) {
     if (event.data.object.payment_status === "paid") {
         const metadata = event.data.object.metadata;
-        const userEmail = event.data.object.customer_email ||
-            event.data.object.customer_details?.email;
-        const userId = metadata?.userId;
+        const userEmail = metadata?.userEmail;
+        const userId = metadata?.testId;
         if(!userId || !userEmail) {
             console.error("User ID or email not found");
             return;
